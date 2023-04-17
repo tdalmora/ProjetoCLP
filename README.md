@@ -15,4 +15,4 @@ Enviroment Setup
 
 App Execution + Database
 
-  $ python3 app.py
+  $ python app.py
