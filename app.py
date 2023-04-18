@@ -7,16 +7,18 @@ import os
 
 # Criadno API
 app = Flask(__name__)
-CORS(app)
+CORS(app)   # Interconectividade entre dispositivos.
 
-path = os.path.dirname(os.path.abspath(__file__))
+path = os.path.dirname(os.path.abspath(__file__))   # Diretório do database
 arquivobd = os.path.join(path, 'pessoas.db')
 
+#  Configs do app
 app.secret_key = "thaigolindo"
-app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///"+arquivobd
+app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///"+arquivobd # criar banco +path. sqlite significa banco na maquina.
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False # remover warnings
 db = SQLAlchemy(app)
 
+# Model pro database.
 class Pessoa(db.Model):
     # atributos da pessoa
     id = db.Column(db.Integer, primary_key=True)
@@ -28,6 +30,7 @@ class Pessoa(db.Model):
     def __str__(self):
         return self.nome + ", " +\
             self.email + ", " + self.telefone
+            
     # expressao da classe no formato json
     def json(self):
         return {
@@ -36,7 +39,7 @@ class Pessoa(db.Model):
             "telefone": self.telefone
         }
 
-
+# Rotas para a web
 @app.route('/')
 def home():
   return "<h1>Bem vindo a home</h1>"
@@ -44,22 +47,31 @@ def home():
 
 @app.route('/lista')
 def lista():
+  # Pega do banco
   pessoas = db.session.query(Pessoa).first()
+  
+  # Usa o metodo json nesse objeto (1ue a gente mesmo criou)
   pessoas_em_json = pessoas.json()
+  
+  # Transoforma em json
   resposta = jsonify(pessoas_em_json)
+  
   return resposta
 
+# Exemplo de route com method post.
+@app.route('/novo', methods=['POST'])
+def novo():
+  ...
 
   
 # Run do API e db.
 if __name__ == "__main__":
   app.run(host='0.0.0.0', debug=True)
-  if os.path.exists(arquivobd):
-        os.remove(arquivobd)
   
   # criar tabelas
   db.create_all()
 
+  # teste para add pessoa ao banco
   p1 = Pessoa(nome = "João da Silva", email = "josilva@gmail.com", telefone = "47 99012 3232")
   
   db.session.add(p1)
