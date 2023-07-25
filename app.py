@@ -50,7 +50,6 @@ def lista():
   return resposta
 
 
-  
 # Run do API e db.
 if __name__ == "__main__":
   app.run(host='0.0.0.0', debug=True)
