@@ -1,13 +1,10 @@
 import json
 
-def read_PORT(na_nf):
-  return na_nf
+def read_PORT(porta):
+  ...
 
 def write_PORT(porta, valor):
-  if porta:
-    return valor
-  else:
-    return not_func(valor)
+  ...
 
 def not_func(number):
   if number >= 1:
