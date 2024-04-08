@@ -52,6 +52,8 @@ for obj in grafo:
 print(saida)
 print(lista_obj)
 
+#ATE AQUI TA TUDO OKAY
+
 #Percorrer o lista obj
 #Somar se em paralelo, multiplicar se em série
 #Escrever na porta no fim do loop
